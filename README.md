@@ -38,10 +38,12 @@ const regex = require('unicode-3.0.1/categories/Lu/regex');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
 const category = require('unicode-3.0.1/categories')[ 0x41 ];
-// Get an array of all code points with the `Bidi_ON` bidi property:
-const on = require('unicode-3.0.1/bidi/ON/code-points');
+// Get an array of all code points with `Bidi_Class=Other_Neutral`:
+const on = require('unicode-3.0.1/bidi-classes/Other_Neutral/code-points');
+// Get a map from code points to bidi classes:
+const bidiClassMap = require('unicode-3.0.1/bidi-classes');
 // Get the directionality of a given code point:
-const directionality = require('unicode-3.0.1/bidi')[ 0x41 ];
+const directionality = require('unicode-3.0.1/bidi-classes').get(0x41);
 
 // …you get the idea.
 ```
@@ -51,6 +53,10 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 ```js
 // properties:
 
+require('unicode-3.0.1/properties/ASCII/code-points');
+require('unicode-3.0.1/properties/ASCII/symbols');
+require('unicode-3.0.1/properties/ASCII/regex');
+
 require('unicode-3.0.1/properties/Any/code-points');
 require('unicode-3.0.1/properties/Any/symbols');
 require('unicode-3.0.1/properties/Any/regex');
@@ -59,73 +65,33 @@ require('unicode-3.0.1/properties/Assigned/code-points');
 require('unicode-3.0.1/properties/Assigned/symbols');
 require('unicode-3.0.1/properties/Assigned/regex');
 
-require('unicode-3.0.1/properties/ASCII/code-points');
-require('unicode-3.0.1/properties/ASCII/symbols');
-require('unicode-3.0.1/properties/ASCII/regex');
-
 // categories:
 
-require('unicode-3.0.1/categories')[ codePoint ]; // lookup array
-
-require('unicode-3.0.1/categories/Cc/code-points');
-require('unicode-3.0.1/categories/Cc/symbols');
-require('unicode-3.0.1/categories/Cc/regex');
+require('unicode-3.0.1/categories').get(codePoint); // lookup map
 
 require('unicode-3.0.1/categories/C/code-points');
 require('unicode-3.0.1/categories/C/symbols');
 require('unicode-3.0.1/categories/C/regex');
 
-require('unicode-3.0.1/categories/Zs/code-points');
-require('unicode-3.0.1/categories/Zs/symbols');
-require('unicode-3.0.1/categories/Zs/regex');
+require('unicode-3.0.1/categories/Cc/code-points');
+require('unicode-3.0.1/categories/Cc/symbols');
+require('unicode-3.0.1/categories/Cc/regex');
 
-require('unicode-3.0.1/categories/Z/code-points');
-require('unicode-3.0.1/categories/Z/symbols');
-require('unicode-3.0.1/categories/Z/regex');
+require('unicode-3.0.1/categories/Cf/code-points');
+require('unicode-3.0.1/categories/Cf/symbols');
+require('unicode-3.0.1/categories/Cf/regex');
 
-require('unicode-3.0.1/categories/Po/code-points');
-require('unicode-3.0.1/categories/Po/symbols');
-require('unicode-3.0.1/categories/Po/regex');
+require('unicode-3.0.1/categories/Cn/code-points');
+require('unicode-3.0.1/categories/Cn/symbols');
+require('unicode-3.0.1/categories/Cn/regex');
 
-require('unicode-3.0.1/categories/P/code-points');
-require('unicode-3.0.1/categories/P/symbols');
-require('unicode-3.0.1/categories/P/regex');
+require('unicode-3.0.1/categories/Co/code-points');
+require('unicode-3.0.1/categories/Co/symbols');
+require('unicode-3.0.1/categories/Co/regex');
 
-require('unicode-3.0.1/categories/Sc/code-points');
-require('unicode-3.0.1/categories/Sc/symbols');
-require('unicode-3.0.1/categories/Sc/regex');
-
-require('unicode-3.0.1/categories/S/code-points');
-require('unicode-3.0.1/categories/S/symbols');
-require('unicode-3.0.1/categories/S/regex');
-
-require('unicode-3.0.1/categories/Ps/code-points');
-require('unicode-3.0.1/categories/Ps/symbols');
-require('unicode-3.0.1/categories/Ps/regex');
-
-require('unicode-3.0.1/categories/Pe/code-points');
-require('unicode-3.0.1/categories/Pe/symbols');
-require('unicode-3.0.1/categories/Pe/regex');
-
-require('unicode-3.0.1/categories/Sm/code-points');
-require('unicode-3.0.1/categories/Sm/symbols');
-require('unicode-3.0.1/categories/Sm/regex');
-
-require('unicode-3.0.1/categories/Pd/code-points');
-require('unicode-3.0.1/categories/Pd/symbols');
-require('unicode-3.0.1/categories/Pd/regex');
-
-require('unicode-3.0.1/categories/Nd/code-points');
-require('unicode-3.0.1/categories/Nd/symbols');
-require('unicode-3.0.1/categories/Nd/regex');
-
-require('unicode-3.0.1/categories/N/code-points');
-require('unicode-3.0.1/categories/N/symbols');
-require('unicode-3.0.1/categories/N/regex');
-
-require('unicode-3.0.1/categories/Lu/code-points');
-require('unicode-3.0.1/categories/Lu/symbols');
-require('unicode-3.0.1/categories/Lu/regex');
+require('unicode-3.0.1/categories/Cs/code-points');
+require('unicode-3.0.1/categories/Cs/symbols');
+require('unicode-3.0.1/categories/Cs/regex');
 
 require('unicode-3.0.1/categories/L/code-points');
 require('unicode-3.0.1/categories/L/symbols');
@@ -135,33 +101,13 @@ require('unicode-3.0.1/categories/LC/code-points');
 require('unicode-3.0.1/categories/LC/symbols');
 require('unicode-3.0.1/categories/LC/regex');
 
-require('unicode-3.0.1/categories/Sk/code-points');
-require('unicode-3.0.1/categories/Sk/symbols');
-require('unicode-3.0.1/categories/Sk/regex');
-
-require('unicode-3.0.1/categories/Pc/code-points');
-require('unicode-3.0.1/categories/Pc/symbols');
-require('unicode-3.0.1/categories/Pc/regex');
-
 require('unicode-3.0.1/categories/Ll/code-points');
 require('unicode-3.0.1/categories/Ll/symbols');
 require('unicode-3.0.1/categories/Ll/regex');
 
-require('unicode-3.0.1/categories/So/code-points');
-require('unicode-3.0.1/categories/So/symbols');
-require('unicode-3.0.1/categories/So/regex');
-
-require('unicode-3.0.1/categories/Pi/code-points');
-require('unicode-3.0.1/categories/Pi/symbols');
-require('unicode-3.0.1/categories/Pi/regex');
-
-require('unicode-3.0.1/categories/No/code-points');
-require('unicode-3.0.1/categories/No/symbols');
-require('unicode-3.0.1/categories/No/regex');
-
-require('unicode-3.0.1/categories/Pf/code-points');
-require('unicode-3.0.1/categories/Pf/symbols');
-require('unicode-3.0.1/categories/Pf/regex');
+require('unicode-3.0.1/categories/Lm/code-points');
+require('unicode-3.0.1/categories/Lm/symbols');
+require('unicode-3.0.1/categories/Lm/regex');
 
 require('unicode-3.0.1/categories/Lo/code-points');
 require('unicode-3.0.1/categories/Lo/symbols');
@@ -171,33 +117,97 @@ require('unicode-3.0.1/categories/Lt/code-points');
 require('unicode-3.0.1/categories/Lt/symbols');
 require('unicode-3.0.1/categories/Lt/regex');
 
-require('unicode-3.0.1/categories/Cn/code-points');
-require('unicode-3.0.1/categories/Cn/symbols');
-require('unicode-3.0.1/categories/Cn/regex');
-
-require('unicode-3.0.1/categories/Lm/code-points');
-require('unicode-3.0.1/categories/Lm/symbols');
-require('unicode-3.0.1/categories/Lm/regex');
-
-require('unicode-3.0.1/categories/Mn/code-points');
-require('unicode-3.0.1/categories/Mn/symbols');
-require('unicode-3.0.1/categories/Mn/regex');
+require('unicode-3.0.1/categories/Lu/code-points');
+require('unicode-3.0.1/categories/Lu/symbols');
+require('unicode-3.0.1/categories/Lu/regex');
 
 require('unicode-3.0.1/categories/M/code-points');
 require('unicode-3.0.1/categories/M/symbols');
 require('unicode-3.0.1/categories/M/regex');
 
+require('unicode-3.0.1/categories/Mc/code-points');
+require('unicode-3.0.1/categories/Mc/symbols');
+require('unicode-3.0.1/categories/Mc/regex');
+
 require('unicode-3.0.1/categories/Me/code-points');
 require('unicode-3.0.1/categories/Me/symbols');
 require('unicode-3.0.1/categories/Me/regex');
 
-require('unicode-3.0.1/categories/Cf/code-points');
-require('unicode-3.0.1/categories/Cf/symbols');
-require('unicode-3.0.1/categories/Cf/regex');
+require('unicode-3.0.1/categories/Mn/code-points');
+require('unicode-3.0.1/categories/Mn/symbols');
+require('unicode-3.0.1/categories/Mn/regex');
 
-require('unicode-3.0.1/categories/Mc/code-points');
-require('unicode-3.0.1/categories/Mc/symbols');
-require('unicode-3.0.1/categories/Mc/regex');
+require('unicode-3.0.1/categories/N/code-points');
+require('unicode-3.0.1/categories/N/symbols');
+require('unicode-3.0.1/categories/N/regex');
+
+require('unicode-3.0.1/categories/Nd/code-points');
+require('unicode-3.0.1/categories/Nd/symbols');
+require('unicode-3.0.1/categories/Nd/regex');
+
+require('unicode-3.0.1/categories/Nl/code-points');
+require('unicode-3.0.1/categories/Nl/symbols');
+require('unicode-3.0.1/categories/Nl/regex');
+
+require('unicode-3.0.1/categories/No/code-points');
+require('unicode-3.0.1/categories/No/symbols');
+require('unicode-3.0.1/categories/No/regex');
+
+require('unicode-3.0.1/categories/P/code-points');
+require('unicode-3.0.1/categories/P/symbols');
+require('unicode-3.0.1/categories/P/regex');
+
+require('unicode-3.0.1/categories/Pc/code-points');
+require('unicode-3.0.1/categories/Pc/symbols');
+require('unicode-3.0.1/categories/Pc/regex');
+
+require('unicode-3.0.1/categories/Pd/code-points');
+require('unicode-3.0.1/categories/Pd/symbols');
+require('unicode-3.0.1/categories/Pd/regex');
+
+require('unicode-3.0.1/categories/Pe/code-points');
+require('unicode-3.0.1/categories/Pe/symbols');
+require('unicode-3.0.1/categories/Pe/regex');
+
+require('unicode-3.0.1/categories/Pf/code-points');
+require('unicode-3.0.1/categories/Pf/symbols');
+require('unicode-3.0.1/categories/Pf/regex');
+
+require('unicode-3.0.1/categories/Pi/code-points');
+require('unicode-3.0.1/categories/Pi/symbols');
+require('unicode-3.0.1/categories/Pi/regex');
+
+require('unicode-3.0.1/categories/Po/code-points');
+require('unicode-3.0.1/categories/Po/symbols');
+require('unicode-3.0.1/categories/Po/regex');
+
+require('unicode-3.0.1/categories/Ps/code-points');
+require('unicode-3.0.1/categories/Ps/symbols');
+require('unicode-3.0.1/categories/Ps/regex');
+
+require('unicode-3.0.1/categories/S/code-points');
+require('unicode-3.0.1/categories/S/symbols');
+require('unicode-3.0.1/categories/S/regex');
+
+require('unicode-3.0.1/categories/Sc/code-points');
+require('unicode-3.0.1/categories/Sc/symbols');
+require('unicode-3.0.1/categories/Sc/regex');
+
+require('unicode-3.0.1/categories/Sk/code-points');
+require('unicode-3.0.1/categories/Sk/symbols');
+require('unicode-3.0.1/categories/Sk/regex');
+
+require('unicode-3.0.1/categories/Sm/code-points');
+require('unicode-3.0.1/categories/Sm/symbols');
+require('unicode-3.0.1/categories/Sm/regex');
+
+require('unicode-3.0.1/categories/So/code-points');
+require('unicode-3.0.1/categories/So/symbols');
+require('unicode-3.0.1/categories/So/regex');
+
+require('unicode-3.0.1/categories/Z/code-points');
+require('unicode-3.0.1/categories/Z/symbols');
+require('unicode-3.0.1/categories/Z/regex');
 
 require('unicode-3.0.1/categories/Zl/code-points');
 require('unicode-3.0.1/categories/Zl/symbols');
@@ -207,97 +217,89 @@ require('unicode-3.0.1/categories/Zp/code-points');
 require('unicode-3.0.1/categories/Zp/symbols');
 require('unicode-3.0.1/categories/Zp/regex');
 
-require('unicode-3.0.1/categories/Nl/code-points');
-require('unicode-3.0.1/categories/Nl/symbols');
-require('unicode-3.0.1/categories/Nl/regex');
+require('unicode-3.0.1/categories/Zs/code-points');
+require('unicode-3.0.1/categories/Zs/symbols');
+require('unicode-3.0.1/categories/Zs/regex');
 
-require('unicode-3.0.1/categories/Cs/code-points');
-require('unicode-3.0.1/categories/Cs/symbols');
-require('unicode-3.0.1/categories/Cs/regex');
+// bidi classes:
 
-require('unicode-3.0.1/categories/Co/code-points');
-require('unicode-3.0.1/categories/Co/symbols');
-require('unicode-3.0.1/categories/Co/regex');
+require('unicode-3.0.1/bidi-classes').get(codePoint); // lookup map
 
-// bidi:
+require('unicode-3.0.1/bidi-classes/Arabic_Letter/code-points');
+require('unicode-3.0.1/bidi-classes/Arabic_Letter/symbols');
+require('unicode-3.0.1/bidi-classes/Arabic_Letter/regex');
 
-require('unicode-3.0.1/bidi')[ codePoint ]; // lookup array
+require('unicode-3.0.1/bidi-classes/Arabic_Number/code-points');
+require('unicode-3.0.1/bidi-classes/Arabic_Number/symbols');
+require('unicode-3.0.1/bidi-classes/Arabic_Number/regex');
 
-require('unicode-3.0.1/bidi/BN/code-points');
-require('unicode-3.0.1/bidi/BN/symbols');
-require('unicode-3.0.1/bidi/BN/regex');
+require('unicode-3.0.1/bidi-classes/Boundary_Neutral/code-points');
+require('unicode-3.0.1/bidi-classes/Boundary_Neutral/symbols');
+require('unicode-3.0.1/bidi-classes/Boundary_Neutral/regex');
 
-require('unicode-3.0.1/bidi/S/code-points');
-require('unicode-3.0.1/bidi/S/symbols');
-require('unicode-3.0.1/bidi/S/regex');
+require('unicode-3.0.1/bidi-classes/Common_Separator/code-points');
+require('unicode-3.0.1/bidi-classes/Common_Separator/symbols');
+require('unicode-3.0.1/bidi-classes/Common_Separator/regex');
 
-require('unicode-3.0.1/bidi/B/code-points');
-require('unicode-3.0.1/bidi/B/symbols');
-require('unicode-3.0.1/bidi/B/regex');
+require('unicode-3.0.1/bidi-classes/European_Number/code-points');
+require('unicode-3.0.1/bidi-classes/European_Number/symbols');
+require('unicode-3.0.1/bidi-classes/European_Number/regex');
 
-require('unicode-3.0.1/bidi/WS/code-points');
-require('unicode-3.0.1/bidi/WS/symbols');
-require('unicode-3.0.1/bidi/WS/regex');
+require('unicode-3.0.1/bidi-classes/European_Separator/code-points');
+require('unicode-3.0.1/bidi-classes/European_Separator/symbols');
+require('unicode-3.0.1/bidi-classes/European_Separator/regex');
 
-require('unicode-3.0.1/bidi/ON/code-points');
-require('unicode-3.0.1/bidi/ON/symbols');
-require('unicode-3.0.1/bidi/ON/regex');
+require('unicode-3.0.1/bidi-classes/European_Terminator/code-points');
+require('unicode-3.0.1/bidi-classes/European_Terminator/symbols');
+require('unicode-3.0.1/bidi-classes/European_Terminator/regex');
 
-require('unicode-3.0.1/bidi/ET/code-points');
-require('unicode-3.0.1/bidi/ET/symbols');
-require('unicode-3.0.1/bidi/ET/regex');
+require('unicode-3.0.1/bidi-classes/Left_To_Right/code-points');
+require('unicode-3.0.1/bidi-classes/Left_To_Right/symbols');
+require('unicode-3.0.1/bidi-classes/Left_To_Right/regex');
 
-require('unicode-3.0.1/bidi/CS/code-points');
-require('unicode-3.0.1/bidi/CS/symbols');
-require('unicode-3.0.1/bidi/CS/regex');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Embedding/code-points');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Embedding/symbols');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Embedding/regex');
 
-require('unicode-3.0.1/bidi/ES/code-points');
-require('unicode-3.0.1/bidi/ES/symbols');
-require('unicode-3.0.1/bidi/ES/regex');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Override/code-points');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Override/symbols');
+require('unicode-3.0.1/bidi-classes/Left_To_Right_Override/regex');
 
-require('unicode-3.0.1/bidi/EN/code-points');
-require('unicode-3.0.1/bidi/EN/symbols');
-require('unicode-3.0.1/bidi/EN/regex');
+require('unicode-3.0.1/bidi-classes/Nonspacing_Mark/code-points');
+require('unicode-3.0.1/bidi-classes/Nonspacing_Mark/symbols');
+require('unicode-3.0.1/bidi-classes/Nonspacing_Mark/regex');
 
-require('unicode-3.0.1/bidi/L/code-points');
-require('unicode-3.0.1/bidi/L/symbols');
-require('unicode-3.0.1/bidi/L/regex');
+require('unicode-3.0.1/bidi-classes/Other_Neutral/code-points');
+require('unicode-3.0.1/bidi-classes/Other_Neutral/symbols');
+require('unicode-3.0.1/bidi-classes/Other_Neutral/regex');
 
-require('unicode-3.0.1/bidi/NSM/code-points');
-require('unicode-3.0.1/bidi/NSM/symbols');
-require('unicode-3.0.1/bidi/NSM/regex');
+require('unicode-3.0.1/bidi-classes/Paragraph_Separator/code-points');
+require('unicode-3.0.1/bidi-classes/Paragraph_Separator/symbols');
+require('unicode-3.0.1/bidi-classes/Paragraph_Separator/regex');
 
-require('unicode-3.0.1/bidi/R/code-points');
-require('unicode-3.0.1/bidi/R/symbols');
-require('unicode-3.0.1/bidi/R/regex');
+require('unicode-3.0.1/bidi-classes/Pop_Directional_Format/code-points');
+require('unicode-3.0.1/bidi-classes/Pop_Directional_Format/symbols');
+require('unicode-3.0.1/bidi-classes/Pop_Directional_Format/regex');
 
-require('unicode-3.0.1/bidi/AL/code-points');
-require('unicode-3.0.1/bidi/AL/symbols');
-require('unicode-3.0.1/bidi/AL/regex');
+require('unicode-3.0.1/bidi-classes/Right_To_Left/code-points');
+require('unicode-3.0.1/bidi-classes/Right_To_Left/symbols');
+require('unicode-3.0.1/bidi-classes/Right_To_Left/regex');
 
-require('unicode-3.0.1/bidi/AN/code-points');
-require('unicode-3.0.1/bidi/AN/symbols');
-require('unicode-3.0.1/bidi/AN/regex');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Embedding/code-points');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Embedding/symbols');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Embedding/regex');
 
-require('unicode-3.0.1/bidi/LRE/code-points');
-require('unicode-3.0.1/bidi/LRE/symbols');
-require('unicode-3.0.1/bidi/LRE/regex');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Override/code-points');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Override/symbols');
+require('unicode-3.0.1/bidi-classes/Right_To_Left_Override/regex');
 
-require('unicode-3.0.1/bidi/RLE/code-points');
-require('unicode-3.0.1/bidi/RLE/symbols');
-require('unicode-3.0.1/bidi/RLE/regex');
+require('unicode-3.0.1/bidi-classes/Segment_Separator/code-points');
+require('unicode-3.0.1/bidi-classes/Segment_Separator/symbols');
+require('unicode-3.0.1/bidi-classes/Segment_Separator/regex');
 
-require('unicode-3.0.1/bidi/PDF/code-points');
-require('unicode-3.0.1/bidi/PDF/symbols');
-require('unicode-3.0.1/bidi/PDF/regex');
-
-require('unicode-3.0.1/bidi/LRO/code-points');
-require('unicode-3.0.1/bidi/LRO/symbols');
-require('unicode-3.0.1/bidi/LRO/regex');
-
-require('unicode-3.0.1/bidi/RLO/code-points');
-require('unicode-3.0.1/bidi/RLO/symbols');
-require('unicode-3.0.1/bidi/RLO/regex');
+require('unicode-3.0.1/bidi-classes/White_Space/code-points');
+require('unicode-3.0.1/bidi-classes/White_Space/symbols');
+require('unicode-3.0.1/bidi-classes/White_Space/regex');
 ```
 
 ## Author
