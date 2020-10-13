@@ -1,4 +1,4 @@
-# Unicode v3.0.1 data
+# Unicode v3.0.1 data [![@unicode/unicode-3.0.1 on npm](https://img.shields.io/npm/v/@unicode/unicode-3.0.1)](https://www.npmjs.com/package/@unicode/unicode-3.0.1)
 
 JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v3.0.1’s categories, scripts, script extensions, blocks, and properties, as well as bidi mirroring and case folding data.
 
