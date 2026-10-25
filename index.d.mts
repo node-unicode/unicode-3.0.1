@@ -4,6 +4,9 @@ declare const data: {
 	readonly Bidi_Class: string[];
 	readonly Case_Folding: string[];
 	readonly Block: string[];
+	readonly Bidi_Mirroring_Glyph: string[];
+	readonly Line_Break: string[];
+	readonly Joining_Type: string[];
 	readonly Names: string[];
 	readonly Simple_Case_Mapping: string[];
 	readonly Special_Casing: string[];

@@ -1,2 +1,2 @@
-declare const codePoints: Map<number, number>;
+declare const codePoints: Map<number, number | number[]>;
 export default codePoints;
